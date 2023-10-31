@@ -1,0 +1,19 @@
+./rotor C 1 GIROSCOPIO 1 1 secreto1.txt secreto-1-g-1-1.bin >rotor-c-g-1-1.txt
+./rotor C 1 GIROSCOPIO 5 1 secreto1.txt secreto-1-g-5-1.bin >rotor-c-g-5-1.txt
+./rotor C 1 GIROSCOPIO 3 4 secreto1.txt secreto-1-g-3-4.bin >rotor-c-g-3-4.txt
+./rotor C 2 GIROSCOPIO BAUNILHA 1 1 1 1 secreto1.txt secreto-1-g-1-1-b-1-1.bin >rotor-c-g-1-1-b-1-1.txt
+./rotor C 2 GIROSCOPIO BAUNILHA 1 1 17 3 secreto1.txt secreto-1-g-1-1-b-17-3.bin >rotor-c-g-1-1-b-1-1.txt
+./rotor C 2 GIROSCOPIO BAUNILHA 5 1 17 3 secreto1.txt secreto-1-g-5-1-b-17-3.bin >rotor-c-g-5-1-b-17-3.txt
+./rotor C 5 GIROSCOPIO BAUNILHA COMPASSO TORNADO FORNALHA 5 1 17 3 173 5 23 17 11 201 secreto1.txt secreto-1-g-5-1-b-17-3-c-173-5-t-23-17-f-11-201.bin >rotor-c-g-5-1-b-17-3-c-173-5-t-23-17-f-11-201.txt
+
+
+./rotor D 1 GIROSCOPIO 1 1 secreto-1-g-1-1.bin secreto-1-g-1-1.dec >rotor-d-g-1-1.txt
+./rotor D 1 GIROSCOPIO 5 1 secreto-1-g-5-1.bin secreto-1-g-5-1.dec >rotor-d-g-5-1.txt
+./rotor D 1 GIROSCOPIO 3 4 secreto-1-g-3-4.bin secreto-1-g-3-4.dec >rotor-d-g-3-4.txt
+./rotor D 2 GIROSCOPIO BAUNILHA 1 1 1 1 secreto-1-g-1-1-b-1-1.bin secreto-1-g-1-1-b-1-1.dec >rotor-d-g-1-1-b-1-1.txt
+./rotor D 2 GIROSCOPIO BAUNILHA 1 1 17 3 secreto-1-g-1-1-b-17-3.bin secreto-1-g-1-1-b-17-3.dec >rotor-d-g-1-1-b-1-1.txt
+./rotor D 2 GIROSCOPIO BAUNILHA 5 1 17 3 secreto-1-g-5-1-b-17-3.bin secreto-1-g-5-1-b-17-3.dec >rotor-d-g-5-1-b-17-3.txt
+./rotor D 5 GIROSCOPIO BAUNILHA COMPASSO TORNADO FORNALHA 5 1 17 3 173 5 23 17 11 201 secreto-1-g-5-1-b-17-3-c-173-5-t-23-17-f-11-201.bin secreto-1-g-5-1-b-17-3-c-173-5-t-23-17-f-11-201.dec >rotor-d-g-5-1-b-17-3-c-173-5-t-23-17-f-11-201.txt
+
+./rotor C 2 GIROSCOPIO BAUNILHA 5 1 17 3 trab1.pdf trab1-g-5-1-b-17-3.bin
+./rotor D 2 GIROSCOPIO BAUNILHA 5 1 17 3 trab1-g-5-1-b-17-3.bin trab1-g-5-1-b-17-3.dec
