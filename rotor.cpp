@@ -18,8 +18,10 @@ public:
     vector<int> S;
 
     Rotor() {}
+    // Inicializa o rotor usando o algoritmo RC4
     Rotor(string mode, string frase, int posMove, int posStep) : mode(mode), frase(frase), posMove(posMove), posStep(posStep), S(256)
     {
+
         for (long unsigned int i = 0; i < S.size(); i++)
         {
             S[i] = i;
@@ -34,6 +36,7 @@ public:
             S[j] = aux;
         }
 
+        // Caso esteja no modo de descriptografar, inverte o rotor
         if (mode == "D")
         {
             vector<int> D(256);
@@ -45,45 +48,57 @@ public:
         }
     }
 
+    // Processa a entrada dada de acordo com o modo
     vector<char> process(vector<char> input)
     {
         vector<char> result;
 
+        // Se estiver no modo de criptografar
         if (mode == "C")
         {
+            // Percorre a entrada
             for (long unsigned int i = 0; i < input.size(); i++)
             {
+                // Criptografa o byte i da entrada fazendo a substituição pelo rotor
                 char cifrado = S[(input[i] + desloc + 256) % 256];
                 result.push_back(cifrado);
 
                 numBytesProcessed += 1;
 
+                // Rotaciona o rotor (postStep) vezes a cada (posMove) bytes cifrados
                 if (numBytesProcessed % posMove == 0)
                 {
                     desloc = desloc + posStep % 256;
                 }
             }
         }
+        // Se estiver no modo de descriptografar
         else if (mode == "D")
         {
-
+            // Percorre a entrada
             for (long unsigned int i = 0; i < input.size(); i++)
             {
-
+                // Byte cifrado na posição i
                 int cifrado = (int)input[i];
+
+                // Garante que o byte cifrado não é negativo
                 if (cifrado < 0)
                 {
                     cifrado += 256;
                 }
 
+                // Garante que o byte cifrado está entre 0 e 255
                 cifrado = cifrado % 256;
 
+                // O byte decifrado é o rotor[cifrado]
                 int decifrado = S[cifrado];
+
+                // Corrige o byte decifrado com o deslocamento
+                result.push_back((decifrado - desloc + 256) % 256);
 
                 numBytesProcessed += 1;
 
-                result.push_back((decifrado - desloc + 256) % 256);
-
+                // Rotaciona o rotor (postStep) vezes a cada (posMove) bytes cifrados
                 if (numBytesProcessed % posMove == 0)
                 {
                     desloc = (desloc + posStep) % 256;
@@ -108,6 +123,7 @@ public:
     }
 };
 
+// Classe que contém os rotores especificados e o modo de operação
 class Cipher
 {
 public:
@@ -118,9 +134,16 @@ public:
 
     Cipher(string mode, int numRotores) : mode(mode), numRotores(numRotores) {}
 
-    void process(string inputFile)
+    void run(string inputFile, string outputFile)
     {
+        printRotors();
+        process(inputFile);
+        writeFile(outputFile);
+    }
 
+    vector<char> readInputFile(string inputFile)
+    {
+        // Faz a leitura do arquivo de entrada
         ifstream readInputfile(inputFile, ios::binary);
 
         vector<char> input;
@@ -133,18 +156,34 @@ public:
 
         readInputfile.close();
 
+        return input;
+    }
+
+    // Processa a entrada de acordo com o modo
+    void process(string inputFile)
+    {
+
+        vector<char> input = readInputFile(inputFile);
+
+        // Se estiver no modo de criptografar
         if (mode == "C")
         {
+            // Processa o primeiro rotor
             result = rotores[0].process(input);
 
+            // Processa o resto dos rotores passando a saida de um como entrada do outro
             for (int i = 1; i < numRotores; i++)
             {
                 result = rotores[i].process(result);
             }
         }
+        // Se estiver no modo de descriptografar
         else if (mode == "D")
         {
+            // Processa o último rotor
             result = rotores.back().process(input);
+
+            // Processa o resto dos rotores, indo de trás para frente, passando a saida de um como entrada do outro
             for (int i = rotores.size() - 2; i >= 0; i--)
             {
                 result = rotores[i].process(result);
@@ -152,6 +191,7 @@ public:
         }
     }
 
+    // Escreve resultado no arquivo de saida especificado
     void writeFile(string outputFile)
     {
         ofstream writeOutputFile(outputFile);
@@ -159,6 +199,7 @@ public:
         writeOutputFile.write(result.data(), result.size());
     }
 
+    // Escreve os rotores em um arquivo
     void printRotors()
     {
         string rotorsOutputFile = "rotor-";
@@ -215,7 +256,7 @@ int main(int argv, char **argc)
     vector<string> frases;
 
     int i = 3;
-    for (i=i;i < 3 + numRotores + 1; i++)
+    for (i = i; i < 3 + numRotores + 1; i++)
     {
         frases.push_back((string)argc[i]);
     }
@@ -231,7 +272,5 @@ int main(int argv, char **argc)
     const char *inputFile = argc[i];
     const char *outputFile = argc[++i];
 
-    c.printRotors();
-    c.process(inputFile);
-    c.writeFile(outputFile);
+    c.run(inputFile, outputFile);
 }
